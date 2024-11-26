@@ -10,15 +10,16 @@ public class WiseSaying {
         this.author = author;
         this.content = content;
     }
+
     public int getId() { return id; }
 
     public String getAuthor() { return author; }
 
-    public void setAuthor(String modifyAuthor) { this.author = modifyAuthor; }
+    public void setAuthor(String author) { this.author = author; }
 
     public String getContent() { return content; }
 
-    public void setContent(String modifyContent) { this.content = modifyContent; }
+    public void setContent(String content) { this.content = content; }
 
     @Override
     public String toString() {
