@@ -1,4 +1,4 @@
-package com;
+package com.wiseSaying;
 
 import java.util.ArrayList;
 import java.util.Scanner;
