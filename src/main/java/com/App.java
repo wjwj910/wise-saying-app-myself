@@ -30,9 +30,13 @@ public class App {
             } else if (cmd.equals("목록")) {
                 System.out.println("번호 / 작가 / 명언");
                 System.out.println("----------------------");
-                for (WiseSaying wiseSaying : wiseSayingList) {
+                for (WiseSaying wiseSaying : wiseSayingList.reversed()) {
                     System.out.println(wiseSaying);
                 }
+            } else if (cmd.startsWith("삭제")){
+                int delID = Integer.parseInt(cmd.substring(6));
+                wiseSayingList.remove(delID - 1);
+                System.out.println(delID+ "번 명언이 삭제되었습니다.");
             }
         }
     }
