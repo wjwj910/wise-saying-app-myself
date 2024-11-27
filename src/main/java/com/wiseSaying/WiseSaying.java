@@ -1,7 +1,10 @@
 package com.wiseSaying;
 
+// 역할 : 명언 객체(번호/명언내용/작가)
+// 컨트롤러, 서비스, 리포지토리에서 모두 사용가능
+
 public class WiseSaying {
-    private int id;
+    private final int id;
     private String author;
     private String content;
 

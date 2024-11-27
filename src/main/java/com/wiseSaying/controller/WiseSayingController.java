@@ -7,7 +7,7 @@ import com.wiseSaying.service.WiseSayingService;
 import java.util.Scanner;
 
 public class WiseSayingController {
-    private WiseSayingService wiseSayingService;
+    private final WiseSayingService wiseSayingService;
 
     public WiseSayingController(WiseSayingService wiseSayingService) {
         this.wiseSayingService = wiseSayingService;
@@ -30,9 +30,11 @@ public class WiseSayingController {
             System.out.println("명언(기존) : " + wiseSayingService.getWiseSayingContent(modifyID));
             System.out.print("명언 : ");
             String modifyContent = scanner.nextLine();
+
             System.out.println("작가(기존) : " + wiseSayingService.getWiseSayingAuthor(modifyID));
             System.out.print("작가 : ");
             String modifyAuthor = scanner.nextLine();
+
             wiseSayingService.modifyWiseSaying(modifyID, modifyAuthor, modifyContent);
         }
     }

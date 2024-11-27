@@ -7,15 +7,16 @@ import com.wiseSaying.repository.WiseSayingRepository;
 import java.util.List;
 
 public class WiseSayingService {
-    private WiseSayingRepository wiseSayingRepository;
+    private final WiseSayingRepository wiseSayingRepository;
 
     public WiseSayingService(WiseSayingRepository wiseSayingRepository) {
         this.wiseSayingRepository = wiseSayingRepository;
     }
 
     public void addWiseSaying(String author, String content) {
-        wiseSayingRepository.save(new WiseSaying(WiseSayingRepository.getNextId(), author, content));
-        System.out.println(WiseSayingRepository.getLastId() + "번 명언이 등록되었습니다.");
+        WiseSaying wiseSaying = new WiseSaying(WiseSayingRepository.getNextId(), author, content);
+        wiseSayingRepository.save(wiseSaying);
+        System.out.println(wiseSaying.getId() + "번 명언이 등록되었습니다.");
     }
 
     public void listWiseSayings() {
