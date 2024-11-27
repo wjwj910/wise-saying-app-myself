@@ -1,17 +1,16 @@
 package com.wiseSaying.service;
 
 import com.google.gson.Gson;
-import com.wiseSaying.WiseSaying;
+import com.wiseSaying.entity.WiseSaying;
 import com.wiseSaying.repository.WiseSayingRepository;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class WiseSayingService {
-    private WiseSayingRepository wiseSayingRepository;
+    private final WiseSayingRepository wiseSayingRepository;
 
     public WiseSayingService(WiseSayingRepository wiseSayingRepository) {
         this.wiseSayingRepository = wiseSayingRepository;
@@ -26,7 +25,7 @@ public class WiseSayingService {
     public void listWiseSayings(int page) {
         List<WiseSaying> wiseSayings = wiseSayingRepository.findAll();
 
-        Collections.sort(wiseSayings, Comparator.comparingInt(WiseSaying::getId).reversed());
+        wiseSayings.sort(Comparator.comparingInt(WiseSaying::getId).reversed());
 
         int totalCount = wiseSayings.size();
         int itemsPerPage = 5;
@@ -58,14 +57,6 @@ public class WiseSayingService {
         }
         System.out.println();
     }
-        /*
-        System.out.println("번호 / 작가 / 명언");
-        System.out.println("----------------------");
-        for (int i = wiseSayings.size() - 1; i >= 0; i--) {
-            System.out.println(wiseSayings.get(i));
-        }
-        */
-    
 
     public void deleteWiseSaying(int id) {
         if (wiseSayingRepository.delete(id)) {
@@ -106,7 +97,7 @@ public class WiseSayingService {
         List<WiseSaying> results = wiseSayingRepository.findByKeyword(keywordType, keyword);
 
         // 내림차순 정렬
-        Collections.sort(results, new Comparator<WiseSaying>() {
+        results.sort(new Comparator<WiseSaying>() {
             @Override
             public int compare(WiseSaying ws1, WiseSaying ws2) {
                 return Integer.compare(ws2.getId(), ws1.getId());

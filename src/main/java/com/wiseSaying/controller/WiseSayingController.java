@@ -1,13 +1,13 @@
 package com.wiseSaying.controller;
 
-import com.wiseSaying.WiseSaying;
+import com.wiseSaying.entity.WiseSaying;
 import com.wiseSaying.service.WiseSayingService;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class WiseSayingController {
-    private WiseSayingService wiseSayingService;
+    private final WiseSayingService wiseSayingService;
 
     public WiseSayingController(WiseSayingService wiseSayingService) {
         this.wiseSayingService = wiseSayingService;
@@ -22,8 +22,15 @@ public class WiseSayingController {
             wiseSayingService.addWiseSaying(author, content);
         } else if (cmd.equals("목록")) {
             wiseSayingService.listWiseSayings(1);
-        } else if(cmd.startsWith("목록?page=")){
-            int page = Integer.parseInt(cmd.split("=")[1]);
+        } else if (cmd.startsWith("목록?page=")){
+            int page;
+            if (cmd.equals("목록?page=")){
+                page = 1;
+            } else {
+                page = Integer.parseInt(cmd.split("=")[1]);
+            }
+
+
             wiseSayingService.listWiseSayings(page);
         }else if (cmd.startsWith("삭제?id=")) {
             int delID = Integer.parseInt(cmd.substring(6));

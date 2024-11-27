@@ -2,7 +2,7 @@ package com.wiseSaying.repository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.wiseSaying.WiseSaying;
+import com.wiseSaying.entity.WiseSaying;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -112,9 +112,7 @@ public class WiseSayingRepository {
         WiseSaying wiseSayingToDel = findById(id);
         if (wiseSayingToDel != null) {
             File file = new File(DIRECTORY + id + ".json");
-            if (file.delete()) {
-                return true;
-            }
+            return file.delete();
         }
         return false;
     }
