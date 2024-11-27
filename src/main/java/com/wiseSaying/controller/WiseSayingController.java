@@ -21,8 +21,11 @@ public class WiseSayingController {
             String author = scanner.nextLine();
             wiseSayingService.addWiseSaying(author, content);
         } else if (cmd.equals("목록")) {
-            wiseSayingService.listWiseSayings();
-        } else if (cmd.startsWith("삭제?id=")) {
+            wiseSayingService.listWiseSayings(1);
+        } else if(cmd.startsWith("목록?page=")){
+            int page = Integer.parseInt(cmd.split("=")[1]);
+            wiseSayingService.listWiseSayings(page);
+        }else if (cmd.startsWith("삭제?id=")) {
             int delID = Integer.parseInt(cmd.substring(6));
             wiseSayingService.deleteWiseSaying(delID);
         } else if (cmd.startsWith("수정?id=")) {

@@ -23,14 +23,49 @@ public class WiseSayingService {
         System.out.println(wiseSaying.getId() + "번 명언이 등록되었습니다.");
     }
 
-    public void listWiseSayings() {
+    public void listWiseSayings(int page) {
         List<WiseSaying> wiseSayings = wiseSayingRepository.findAll();
+
+        Collections.sort(wiseSayings, Comparator.comparingInt(WiseSaying::getId).reversed());
+
+        int totalCount = wiseSayings.size();
+        int itemsPerPage = 5;
+        int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
+
+        if (page < 1){
+            page = 1;
+        } else if (page > totalPages){
+            page = totalPages;
+        }
+
+        int startIndex = (page - 1) * itemsPerPage;
+        int endIndex = Math.min(startIndex + itemsPerPage, totalCount);
+        System.out.println("번호 / 작가 / 명언");
+        System.out.println("----------------------");
+
+        for (int i = startIndex; i < endIndex; i++) {
+            System.out.println(wiseSayings.get(i));
+        }
+
+        // 페이지 정보 출력
+        System.out.print("----------------------\n페이지 : ");
+        for (int i = 1; i <= totalPages; i++) {
+            if (i == page) {
+                System.out.print("[" + i + "] ");
+            } else {
+                System.out.print(i + " ");
+            }
+        }
+        System.out.println();
+    }
+        /*
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
         for (int i = wiseSayings.size() - 1; i >= 0; i--) {
             System.out.println(wiseSayings.get(i));
         }
-    }
+        */
+    
 
     public void deleteWiseSaying(int id) {
         if (wiseSayingRepository.delete(id)) {

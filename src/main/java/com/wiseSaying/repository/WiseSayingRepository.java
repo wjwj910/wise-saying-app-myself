@@ -21,6 +21,13 @@ public class WiseSayingRepository {
     public WiseSayingRepository() {
         gson = new GsonBuilder().setPrettyPrinting().create();
         loadLastId();
+        createSampleData();
+    }
+
+    private void createSampleData() {
+        for(int i = 1; i <= 10; i++) {
+            save(new WiseSaying(i, "작자미상 " + i, "명언 " + i));
+        }
     }
 
     private void loadLastId() {
