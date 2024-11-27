@@ -93,17 +93,27 @@ public class WiseSayingService {
         }
     }
 
-    public List<WiseSaying> searchWiseSayings(String keywordType, String keyword) {
+    public List<WiseSaying> searchWiseSayings(String keywordType, String keyword, int page) {
         List<WiseSaying> results = wiseSayingRepository.findByKeyword(keywordType, keyword);
 
-        // 내림차순 정렬
-        results.sort(new Comparator<WiseSaying>() {
-            @Override
-            public int compare(WiseSaying ws1, WiseSaying ws2) {
-                return Integer.compare(ws2.getId(), ws1.getId());
-            }
-        });
+        // 최신 글이 우선적으로 나오도록 정렬
+        results.sort(Comparator.comparingInt(WiseSaying::getId).reversed());
 
-        return results;
+        // 페이징 처리
+        int totalCount = results.size();
+        int itemsPerPage = 5;
+        int totalPages = (int) Math.ceil((double) totalCount / itemsPerPage);
+
+        // 페이지 번호가 유효한지 확인
+        if (page < 1) {
+            page = 1;
+        } else if (page > totalPages) {
+            page = totalPages;
+        }
+
+        int startIndex = (page - 1) * itemsPerPage;
+        int endIndex = Math.min(startIndex + itemsPerPage, totalCount);
+
+        return results.subList(startIndex, endIndex);
     }
 }

@@ -29,8 +29,6 @@ public class WiseSayingController {
             } else {
                 page = Integer.parseInt(cmd.split("=")[1]);
             }
-
-
             wiseSayingService.listWiseSayings(page);
         }else if (cmd.startsWith("삭제?id=")) {
             int delID = Integer.parseInt(cmd.substring(6));
@@ -51,12 +49,19 @@ public class WiseSayingController {
             String keywordType = parts[0].split("=")[1];
             String keyword = parts[1].split("=")[1];
 
+            // 페이지 번호 처리
+            int page = 1; // 기본 페이지는 1
+            if (parts.length > 2) {
+                // 페이지 번호가 포함되어 있는 경우
+                page = Integer.parseInt(parts[2].split("=")[1]);
+            }
+
             System.out.println("----------------------");
             System.out.println("검색타입 : " + keywordType);
             System.out.println("검색어 : " + keyword);
             System.out.println("----------------------");
 
-            List<WiseSaying> results = wiseSayingService.searchWiseSayings(keywordType, keyword);
+            List<WiseSaying> results = wiseSayingService.searchWiseSayings(keywordType, keyword, page);
             System.out.println("번호 / 작가 / 명언");
             System.out.println("----------------------");
 
