@@ -40,7 +40,7 @@ public class WiseSayingRepository {
     }
 
     public static int getNextId() {
-        return ++lastId;
+        return lastId + 1;
     }
 
     public void save(WiseSaying wiseSaying) {
@@ -50,7 +50,10 @@ public class WiseSayingRepository {
             writer.write(json);
             writer.close();
 
-            saveLastId();
+            if(wiseSaying.getId() > lastId) {
+                lastId = wiseSaying.getId();
+                saveLastId();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
