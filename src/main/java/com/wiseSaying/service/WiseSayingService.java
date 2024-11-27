@@ -6,6 +6,8 @@ import com.wiseSaying.repository.WiseSayingRepository;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class WiseSayingService {
@@ -63,5 +65,19 @@ public class WiseSayingService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<WiseSaying> searchWiseSayings(String keywordType, String keyword) {
+        List<WiseSaying> results = wiseSayingRepository.findByKeyword(keywordType, keyword);
+
+        // 내림차순 정렬
+        Collections.sort(results, new Comparator<WiseSaying>() {
+            @Override
+            public int compare(WiseSaying ws1, WiseSaying ws2) {
+                return Integer.compare(ws2.getId(), ws1.getId());
+            }
+        });
+
+        return results;
     }
 }

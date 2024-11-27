@@ -115,4 +115,20 @@ public class WiseSayingRepository {
             save(wiseSayingToUpdate); // 파일 업데이트
         }
     }
+
+
+    public List<WiseSaying> findByKeyword(String keywordType, String keyword) {
+        List<WiseSaying> result = new ArrayList<>();
+        List<WiseSaying> wiseSayings = findAll();
+
+        for (WiseSaying wiseSaying : wiseSayings) {
+            if (keywordType.equals("content") && wiseSaying.getContent().contains(keyword)) {
+                result.add(wiseSaying);
+            } else if (keywordType.equals("author") && wiseSaying.getAuthor().contains(keyword)) {
+                result.add(wiseSaying);
+            }
+        }
+        return result;
+    }
+
 }
