@@ -1,15 +1,15 @@
 package com.wiseSaying.service;
-// 역할 : 순수 비지니스 로직
-// 스캐너 사용금지, 출력금지
+
 import com.google.gson.Gson;
 import com.wiseSaying.WiseSaying;
 import com.wiseSaying.repository.WiseSayingRepository;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 public class WiseSayingService {
-    private final WiseSayingRepository wiseSayingRepository;
+    private WiseSayingRepository wiseSayingRepository;
 
     public WiseSayingService(WiseSayingRepository wiseSayingRepository) {
         this.wiseSayingRepository = wiseSayingRepository;
@@ -57,10 +57,10 @@ public class WiseSayingService {
         List<WiseSaying> wiseSayings = wiseSayingRepository.findAll();
         String json = new Gson().toJson(wiseSayings);
 
-        try (FileWriter writer = new FileWriter("src/main/resources/db/wiseSaying/data.json")){
+        try (FileWriter writer = new FileWriter("src/main/resources/db/wiseSaying/data.json")) {
             writer.write(json);
             System.out.println("data.json 파일의 내용이 갱신되었습니다.");
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -1,13 +1,11 @@
 package com.wiseSaying.controller;
-// 역할 : 고객의 명령을 입력받고 적절한 응답을 표현
-// 스캐너 사용가능, 출력 사용가능
 
 import com.wiseSaying.service.WiseSayingService;
 
 import java.util.Scanner;
 
 public class WiseSayingController {
-    private final WiseSayingService wiseSayingService;
+    private WiseSayingService wiseSayingService;
 
     public WiseSayingController(WiseSayingService wiseSayingService) {
         this.wiseSayingService = wiseSayingService;
@@ -30,13 +28,11 @@ public class WiseSayingController {
             System.out.println("명언(기존) : " + wiseSayingService.getWiseSayingContent(modifyID));
             System.out.print("명언 : ");
             String modifyContent = scanner.nextLine();
-
             System.out.println("작가(기존) : " + wiseSayingService.getWiseSayingAuthor(modifyID));
             System.out.print("작가 : ");
             String modifyAuthor = scanner.nextLine();
-
             wiseSayingService.modifyWiseSaying(modifyID, modifyAuthor, modifyContent);
-        } else if(cmd.equals("빌드")){
+        } else if (cmd.equals("빌드")) {
             wiseSayingService.buildDataJson();
         }
     }

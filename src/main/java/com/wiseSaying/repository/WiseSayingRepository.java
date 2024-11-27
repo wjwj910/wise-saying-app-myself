@@ -1,9 +1,8 @@
 package com.wiseSaying.repository;
-// 역할 : 데이터의 조회, 수정, 삭제, 생성을 담당
-// 스캐너 사용금지, 출력 금지
-import com.wiseSaying.WiseSaying;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.wiseSaying.WiseSaying;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -67,7 +66,8 @@ public class WiseSayingRepository {
             File[] files = folder.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if (file.getName().endsWith(".json")) {
+                    // 명언 파일만 읽고, data.json은 무시합니다.
+                    if (file.getName().endsWith(".json") && !file.getName().equals("lastId.txt") && !file.getName().equals("data.json")) {
                         try {
                             String json = new String(Files.readAllBytes(file.toPath()));
                             WiseSaying wiseSaying = gson.fromJson(json, WiseSaying.class);
@@ -81,6 +81,7 @@ public class WiseSayingRepository {
         }
         return wiseSayingList;
     }
+
 
     public WiseSaying findById(int id) {
         File file = new File(DIRECTORY + id + ".json");
