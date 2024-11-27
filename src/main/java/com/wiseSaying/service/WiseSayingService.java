@@ -1,9 +1,11 @@
 package com.wiseSaying.service;
 // 역할 : 순수 비지니스 로직
 // 스캐너 사용금지, 출력금지
+import com.google.gson.Gson;
 import com.wiseSaying.WiseSaying;
 import com.wiseSaying.repository.WiseSayingRepository;
 
+import java.io.FileWriter;
 import java.util.List;
 
 public class WiseSayingService {
@@ -49,5 +51,17 @@ public class WiseSayingService {
     public void modifyWiseSaying(int id, String author, String content) {
         wiseSayingRepository.update(id, author, content);
         System.out.println(id + "번 명언이 수정되었습니다.");
+    }
+
+    public void buildDataJson() {
+        List<WiseSaying> wiseSayings = wiseSayingRepository.findAll();
+        String json = new Gson().toJson(wiseSayings);
+
+        try (FileWriter writer = new FileWriter("src/main/resources/db/wiseSaying/data.json")){
+            writer.write(json);
+            System.out.println("data.json 파일의 내용이 갱신되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

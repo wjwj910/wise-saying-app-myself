@@ -36,6 +36,8 @@ public class WiseSayingController {
             String modifyAuthor = scanner.nextLine();
 
             wiseSayingService.modifyWiseSaying(modifyID, modifyAuthor, modifyContent);
+        } else if(cmd.equals("빌드")){
+            wiseSayingService.buildDataJson();
         }
     }
 }
